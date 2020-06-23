@@ -1,5 +1,5 @@
 import { Font } from 'ts-fonts';
-import { Grid } from './tokens';
+import { Grid } from './grid';
 import { ZsObject } from 'zenstyle';
 
 const SourceSansProInternal = Font.create('Source Sans Pro', {

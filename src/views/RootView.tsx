@@ -39,6 +39,7 @@ export const RootView: React.FC<Props> = ({ children, isDev }) => {
               boxSizing: 'border-box',
               outlineOffset: 5,
               outlineColor: Colors.blue(500),
+              margin: 0,
               // overflow: 'hidden',
             },
             // make native scrollbar ugly so we don't use them !
