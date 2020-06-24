@@ -42,7 +42,7 @@ export const EditableText: React.FC<Props> = ({ onChange, value }) => {
           type="text"
         />
         <Styled.button
-          onClick={() => {
+          onClick={(e) => {
             onChange(editValue);
             setEditing(false);
           }}

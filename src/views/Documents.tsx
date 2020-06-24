@@ -101,8 +101,7 @@ export const Documents: React.FC<Props> = ({ documents, addDocument, kiip }) => 
           canEscapeKeyClose={true}
           canOutsideClickClose={true}
           onClose={() => {
-            console.log('close');
-            // setSelectedDocumentId(null);
+            setSelectedDocumentId(null);
           }}
         >
           <DocumentSettings document={document} kiip={kiip} />
