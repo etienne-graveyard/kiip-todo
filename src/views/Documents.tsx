@@ -9,8 +9,28 @@ import { FolderIcon } from '../components/FolderIcon';
 import { MoreIcon } from '../components/MoreIcon';
 import { PlusIcon } from '../components/PlusIcon';
 import { Overlay } from 'react-oot';
+import { AppDocument, AppKiip } from '../logic/kiip';
+import { addBetween, notNil } from '../utils';
+import { DocumentSettings } from './DocumentSettings';
 
-export const Documents: React.FC = () => {
+interface Props {
+  kiip: AppKiip;
+  documents: Array<AppDocument>;
+  addDocument: () => void;
+}
+
+export const Documents: React.FC<Props> = ({ documents, addDocument, kiip }) => {
+  const [selectedDocumentId, setSelectedDocumentId] = React.useState<string | null>(null);
+
+  const document = React.useMemo(() => {
+    if (selectedDocumentId === null) {
+      return null;
+    }
+    return notNil(documents.find((doc) => doc.id === selectedDocumentId));
+  }, [documents, selectedDocumentId]);
+
+  console.log({ selectedDocumentId, document });
+
   return (
     <Styled.div
       zs={{
@@ -33,46 +53,82 @@ export const Documents: React.FC = () => {
           Todo List
         </Styled.h1>
         <Styled.div zs={[Tokens.padding(2)]}>
-          <Styled.div
-            zs={[
-              Tokens.padding({ horizontal: 3 }),
-              Tokens.flexHorizontal('center'),
-              { background: Colors.blueGrey(50), borderRadius: Grid.small(2) },
-            ]}
-          >
-            <FolderIcon size={Grid.small(4)} />
-            <Styled.span
-              zs={[
-                Fonts.SourceSansPro('Regular'),
-                Fonts.lineHeight(4),
-                Tokens.flexChild,
-                Tokens.margin({ vertical: 3, horizontal: 1 }),
-              ]}
-            >
-              My Document
-            </Styled.span>
-            <MoreIcon size={Grid.small(4)} />
-          </Styled.div>
+          {addBetween(
+            documents.map((doc) => (
+              <Styled.div
+                key={doc.id}
+                zs={[
+                  Tokens.padding({ horizontal: 3 }),
+                  Tokens.flexHorizontal('center'),
+                  { background: Colors.blueGrey(50), borderRadius: Grid.small(2) },
+                ]}
+              >
+                <FolderIcon size={Grid.small(4)} />
+                <Styled.span
+                  zs={[
+                    Fonts.SourceSansPro('Regular'),
+                    Fonts.lineHeight(4),
+                    Tokens.flexChild,
+                    Tokens.margin({ vertical: 3, horizontal: 1 }),
+                  ]}
+                >
+                  {doc.meta.name}
+                </Styled.span>
+                <Styled.button
+                  zs={[
+                    Tokens.flexCenter(),
+                    {
+                      border: 'none',
+                      padding: 0,
+                      margin: 0,
+                    },
+                  ]}
+                  onClick={() => setSelectedDocumentId(doc.id)}
+                >
+                  <MoreIcon size={Grid.small(4)} />
+                </Styled.button>
+              </Styled.div>
+            )),
+            (index) => (
+              <Styled.div key={`spacer-${index}`} zs={{ height: Grid.small(2) }} />
+            )
+          )}
         </Styled.div>
       </Scrollbar>
-      <Overlay canEscapeKeyClose={false} canOutsideClickClose={false}>
-        <Styled.div
-          zs={[
-            {
-              position: 'fixed',
-              bottom: Grid.small(2),
-              right: Grid.small(2),
-              width: Grid.size(2),
-              height: Grid.size(2),
-              background: Colors.blue(700),
-              borderRadius: Grid.small(4),
-            },
-            Tokens.flexCenter(),
-          ]}
+      {document !== null ? (
+        <Overlay
+          key={document.id}
+          canEscapeKeyClose={true}
+          canOutsideClickClose={true}
+          onClose={() => {
+            console.log('close');
+            // setSelectedDocumentId(null);
+          }}
         >
-          <PlusIcon size={Grid.small(4)} color={Colors.white} />
-        </Styled.div>
-      </Overlay>
+          <DocumentSettings document={document} kiip={kiip} />
+        </Overlay>
+      ) : (
+        <Overlay canEscapeKeyClose={false} canOutsideClickClose={false} key="add-doc">
+          <Styled.button
+            onClick={() => addDocument()}
+            zs={[
+              {
+                border: 'none',
+                position: 'fixed',
+                bottom: Grid.small(2),
+                right: Grid.small(2),
+                width: Grid.size(2),
+                height: Grid.size(2),
+                background: Colors.blue(700),
+                borderRadius: Grid.small(4),
+              },
+              Tokens.flexCenter(),
+            ]}
+          >
+            <PlusIcon size={Grid.small(4)} color={Colors.white} />
+          </Styled.button>
+        </Overlay>
+      )}
     </Styled.div>
   );
 };

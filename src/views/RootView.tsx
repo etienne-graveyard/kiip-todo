@@ -35,11 +35,18 @@ export const RootView: React.FC<Props> = ({ children, isDev }) => {
               width: '100%',
               padding: '0.05px',
             },
+            button: {
+              border: 'none',
+            },
+            input: {
+              border: 'none',
+            },
             '*': {
               boxSizing: 'border-box',
               outlineOffset: 5,
               outlineColor: Colors.blue(500),
               margin: 0,
+              padding: 0,
               // overflow: 'hidden',
             },
             // make native scrollbar ugly so we don't use them !
