@@ -9,15 +9,17 @@ interface Props {
 export const App: React.FC<Props> = ({ kiip }) => {
   const [documents, setDocuments] = React.useState<Array<AppDocument> | null>(null);
 
-  const updateDocuments = React.useCallback(() => {
+  React.useEffect(() => {
     kiip.getDocuments().then((docs) => {
       setDocuments(docs);
     });
   }, [kiip]);
 
   React.useEffect(() => {
-    updateDocuments();
-  }, [updateDocuments]);
+    return kiip.subscribeDocuments((docs) => {
+      setDocuments(docs);
+    });
+  });
 
   return (
     <div>
@@ -28,9 +30,7 @@ export const App: React.FC<Props> = ({ kiip }) => {
           kiip={kiip}
           documents={documents}
           addDocument={() => {
-            kiip.createDocument().then(() => {
-              updateDocuments();
-            });
+            kiip.createDocument();
           }}
         />
       )}

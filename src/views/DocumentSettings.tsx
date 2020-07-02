@@ -2,7 +2,7 @@ import React from 'react';
 import { Styled } from '../design/styled';
 import { Grid } from '../design/grid';
 import { Colors } from '../design/colors';
-import { AppDocument, AppKiip, AppKiipDocumentFacade } from '../logic/kiip';
+import { AppDocument, AppKiip, AppKiipDocumentStore } from '../logic/kiip';
 import { Tokens } from '../design/tokens';
 import { Fonts } from '../design/fonts';
 import { EditableText } from '../components/EditableText';
@@ -13,15 +13,15 @@ interface Props {
 }
 
 export const DocumentSettings: React.FC<Props> = ({ document, kiip }) => {
-  const [documentFacade, setDocumentFacade] = React.useState<AppKiipDocumentFacade | null>(null);
+  const [documentStore, setDocumentFacade] = React.useState<AppKiipDocumentStore | null>(null);
 
   React.useEffect(() => {
-    kiip.getDocument(document.id).then((facade) => {
+    kiip.getDocumentStore(document.id).then((facade) => {
       setDocumentFacade(facade);
     });
   }, [document.id, kiip]);
 
-  console.log(documentFacade);
+  console.log(documentStore);
 
   const servers = document.meta.servers;
 
@@ -43,8 +43,8 @@ export const DocumentSettings: React.FC<Props> = ({ document, kiip }) => {
         <EditableText
           value={document.meta.name}
           onChange={(newName) => {
-            if (documentFacade) {
-              documentFacade.setMeta({
+            if (documentStore) {
+              documentStore.setMeta({
                 ...document.meta,
                 name: newName,
               });

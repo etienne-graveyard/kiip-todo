@@ -58,21 +58,24 @@ export const Documents: React.FC<Props> = ({ documents, addDocument, kiip }) => 
               <Styled.div
                 key={doc.id}
                 zs={[
-                  Tokens.padding({ horizontal: 3 }),
                   Tokens.flexHorizontal('center'),
                   { background: Colors.blueGrey(50), borderRadius: Grid.small(2) },
                 ]}
               >
-                <FolderIcon size={Grid.small(4)} />
                 <Styled.span
-                  zs={[
-                    Fonts.SourceSansPro('Regular'),
-                    Fonts.lineHeight(4),
-                    Tokens.flexChild,
-                    Tokens.margin({ vertical: 3, horizontal: 1 }),
-                  ]}
+                  zs={[Tokens.flexHorizontalChild('center'), Tokens.padding({ left: 3 })]}
                 >
-                  {doc.meta.name}
+                  <FolderIcon size={Grid.small(4)} />
+                  <Styled.span
+                    zs={[
+                      Fonts.SourceSansPro('Regular'),
+                      Fonts.lineHeight(4),
+                      Tokens.flexChild,
+                      Tokens.margin({ vertical: 3, horizontal: 1 }),
+                    ]}
+                  >
+                    {doc.meta.name}
+                  </Styled.span>
                 </Styled.span>
                 <Styled.button
                   zs={[
@@ -82,6 +85,7 @@ export const Documents: React.FC<Props> = ({ documents, addDocument, kiip }) => 
                       padding: 0,
                       margin: 0,
                     },
+                    Tokens.margin({ right: 3 }),
                   ]}
                   onClick={() => setSelectedDocumentId(doc.id)}
                 >

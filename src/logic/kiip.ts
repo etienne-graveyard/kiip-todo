@@ -1,4 +1,4 @@
-import { Kiip, KiipDocument, KiipDocumentFacade } from '@kiip/core';
+import { Kiip, KiipDocument, KiipDocumentStore } from '@kiip/core';
 import { KiipIndexedDB } from '@kiip/indexeddb';
 
 export type AppDocument = KiipDocument<Metadata>;
@@ -21,10 +21,11 @@ interface Metadata {
 
 export type AppKiip = Kiip<Schema, Metadata>;
 
-export type AppKiipDocumentFacade = KiipDocumentFacade<Schema, Metadata>;
+export type AppKiipDocumentStore = KiipDocumentStore<Schema, Metadata>;
 
 export async function AppKiip() {
-  const db = await KiipIndexedDB('kiip-todo-v1');
+  const db = await KiipIndexedDB('kiip-todo-v2');
+  // const db = KiipMemoryDb();
 
   return Kiip<Schema, Metadata>(db, {
     getInitialMetadata: () => ({
