@@ -40,7 +40,12 @@ export const AddServerForm: React.FC<Props> = ({ onCancel, onAdd }) => {
       </Styled.h3>
       <TextInput placeholder="Server address" value={serverAddress} onChange={setServerAddress} />
       <Styled.div placeholder="Server password" zs={{ height: Grid.small(2) }} />
-      <TextInput value={serverPassword} onChange={setServerPassword} type="password" />
+      <TextInput
+        placeholder="Password"
+        value={serverPassword}
+        onChange={setServerPassword}
+        type="password"
+      />
       <Styled.div zs={[Tokens.flexHorizontal('center'), Tokens.margin({ top: 2 })]}>
         <Styled.button
           onClick={onCancel}
@@ -65,7 +70,7 @@ export const AddServerForm: React.FC<Props> = ({ onCancel, onAdd }) => {
           zs={[
             Fonts.SourceSansPro('SemiBold'),
             Fonts.lineHeight(4),
-            Tokens.padding({ vertical: 2, horizontal: 3 }),
+            Tokens.padding({ vertical: 1, horizontal: 3 }),
             {
               background: Colors.blue(600),
               borderRadius: Grid.small(4),

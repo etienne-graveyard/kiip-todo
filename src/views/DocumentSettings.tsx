@@ -47,7 +47,7 @@ export const DocumentSettings: React.FC<Props> = ({ document, kiip }) => {
           Tokens.flexVertical(),
         ]}
       >
-        <Styled.div zs={[Tokens.margin({ all: 2, bottom: 0 })]}>
+        <Styled.div zs={[Tokens.margin({ all: 2, bottom: showAddServerForm ? 2 : 0 })]}>
           <EditableText
             value={document.meta.name}
             onChange={(newName) => {
@@ -60,7 +60,11 @@ export const DocumentSettings: React.FC<Props> = ({ document, kiip }) => {
             }}
           />
         </Styled.div>
-        <p>TODO: Servers</p>
+        <div>
+          {servers.map((server, index) => {
+            return <div key={index}>{server.url}</div>;
+          })}
+        </div>
         {!showAddServerForm && (
           <Styled.div zs={[Tokens.padding(4), Tokens.flexCenter]}>
             <Styled.button
@@ -97,17 +101,27 @@ export const DocumentSettings: React.FC<Props> = ({ document, kiip }) => {
                   address,
                   password,
                 });
+                fetch(`${address}/add`, {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    documentId: document.id,
+                    password,
+                  }),
+                }).then(() => {
+                  console.log('success');
 
-                // documentStore.setMeta({
-                //   ...document.meta,
-                //   servers: [
-                //     ...document.meta,
-                //     {
-                //       url: address,
-
-                //     }
-                //   ]
-                // });
+                  // documentStore.setMeta()
+                  documentStore.setMeta({
+                    ...document.meta,
+                    servers: [
+                      ...document.meta.servers,
+                      {
+                        url: address,
+                        token: 'yolo',
+                      },
+                    ],
+                  });
+                });
               }
             }}
           />
