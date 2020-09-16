@@ -1,4 +1,7 @@
-import MaterialColors, { ColorName } from 'interpolated-material-colors';
+import {
+  ColorName,
+  InterpolatedMaterialColors as MaterialColors,
+} from 'interpolated-material-colors';
 
 export const Colors = {
   black: MaterialColors.blueGrey(950),

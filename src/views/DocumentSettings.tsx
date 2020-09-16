@@ -7,6 +7,7 @@ import { Fonts } from '../design/fonts';
 import { AppDocument, AppKiip, AppKiipDocumentStore } from '../logic/kiip';
 import { EditableText } from '../components/EditableText';
 import { AddServerForm } from './AddServerForm';
+import Ky from 'ky';
 
 interface Props {
   document: AppDocument;
@@ -101,27 +102,28 @@ export const DocumentSettings: React.FC<Props> = ({ document, kiip }) => {
                   address,
                   password,
                 });
-                fetch(`${address}/add`, {
-                  method: 'POST',
-                  body: JSON.stringify({
+                Ky.post(`${address}/register`, {
+                  json: {
                     documentId: document.id,
                     password,
-                  }),
-                }).then(() => {
-                  console.log('success');
+                  },
+                })
+                  .json()
+                  .then((data) => {
+                    console.log('success', data);
 
-                  // documentStore.setMeta()
-                  documentStore.setMeta({
-                    ...document.meta,
-                    servers: [
-                      ...document.meta.servers,
-                      {
-                        url: address,
-                        token: 'yolo',
-                      },
-                    ],
+                    // documentStore.setMeta()
+                    documentStore.setMeta({
+                      ...document.meta,
+                      servers: [
+                        ...document.meta.servers,
+                        {
+                          url: address,
+                          token: 'yolo',
+                        },
+                      ],
+                    });
                   });
-                });
               }
             }}
           />

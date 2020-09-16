@@ -87,7 +87,9 @@ export const Documents: React.FC<Props> = ({ documents, addDocument, kiip }) => 
                     },
                     Tokens.margin({ right: 3 }),
                   ]}
-                  onClick={() => setSelectedDocumentId(doc.id)}
+                  onClick={() => {
+                    setSelectedDocumentId((prev) => (prev === doc.id ? null : doc.id));
+                  }}
                 >
                   <MoreIcon size={Grid.small(4)} />
                 </Styled.button>

@@ -39,6 +39,13 @@ export const EditableText: React.FC<Props> = ({ onChange, value }) => {
           ]}
           value={editValue}
           onChange={(e) => setEditValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              onChange(editValue);
+              setEditing(false);
+            }
+          }}
           type="text"
         />
         <Styled.button
