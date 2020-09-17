@@ -15,13 +15,13 @@ interface Props {
 }
 
 export const DocumentSettings: React.FC<Props> = ({ document, kiip }) => {
-  const [documentStore, setDocumentFacade] = React.useState<AppKiipDocumentStore | null>(null);
+  const [documentStore, setDocumentStore] = React.useState<AppKiipDocumentStore | null>(null);
 
   const [showAddServerForm, setShowAddServerForm] = React.useState(false);
 
   React.useEffect(() => {
-    kiip.getDocumentStore(document.id).then((facade) => {
-      setDocumentFacade(facade);
+    kiip.getDocumentStore(document.id).then((store) => {
+      setDocumentStore(store);
     });
   }, [document.id, kiip]);
 

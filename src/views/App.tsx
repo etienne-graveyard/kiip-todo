@@ -19,7 +19,7 @@ export const App: React.FC<Props> = ({ kiip }) => {
     return kiip.subscribeDocuments((docs) => {
       setDocuments(docs);
     });
-  });
+  }, [kiip]);
 
   return (
     <div>

@@ -1444,26 +1444,26 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@kiip/core@^0.5.3":
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/@kiip/core/-/core-0.5.3.tgz#678bdf3223eef4df14ce81a14d3d90384725a916"
-  integrity sha512-/SVKD3NKHSyqiAF1y4RtHSxY5nbH1sFww8wK0WKA8p69Btu/Y+qia4j5sPbeY1D5Jh2CRgco+ixfRaCjtvzBYw==
+"@kiip/core@^0.5.4":
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/@kiip/core/-/core-0.5.4.tgz#9007bd7ef1d653aecbaafc75cac9fe8cadbc30ff"
+  integrity sha512-xnr/ViNor7cqmolPZ4j+02SrQa82tgu9H1zRauzP5cNzXHfVFon0cvU9h9CMcmYMLABmHFwcXm9CEJZnQ3fRYw==
   dependencies:
     nanoid "^3.1.12"
     suub "^3.1.0"
 
-"@kiip/indexeddb@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@kiip/indexeddb/-/indexeddb-0.5.1.tgz#7ff06797cf0218a7ce4002c148ca8b8a6b350002"
-  integrity sha512-ZwubhzCoGffKU19pmcp1zmDSQJO1qBVuAmK0XM3hy144tmJmI4843MZ8AW4lcwEOkVPRaHdU7lfVYUy8qxrSIQ==
+"@kiip/indexeddb@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@kiip/indexeddb/-/indexeddb-0.5.2.tgz#257f83ea220b0f0ed7e9d4c7e0840162afcef430"
+  integrity sha512-xcUq7cMSwjtr5e+GwN9/AI/wXoV1qC6npFbfad/xyajMDG+rGmwFnGVxkECbLdSBw0V2/fWpcOCRS6RJlj0XQw==
   dependencies:
-    idb "^5.0.4"
-    suub "^3.0.1"
+    idb "^5.0.6"
+    suub "^3.1.0"
 
-"@kiip/memorydb@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@kiip/memorydb/-/memorydb-0.3.4.tgz#115d1a5bdb6305a7b10d281676032a77d78ae4c3"
-  integrity sha512-hPlqfbmvvh3rJErE+cDs1ntiISa2aqS7t7d3iTyg7S5MBcDFsREntgicvK1mYbYSEdQ3xwkoamYeiDqUv9fJPg==
+"@kiip/memorydb@^0.3.5":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/@kiip/memorydb/-/memorydb-0.3.5.tgz#46fecb91f19d241772fca3321ae53858704aff82"
+  integrity sha512-HH4ltVOF3VSLw/vhQ23QDbvBjVcz1X/Z4LfMgdMq2lksWn6/g7JESckF93RLNWd52BwaG/819YBNMcdbI2qx1Q==
   dependencies:
     suub "^3.1.0"
 
@@ -5446,7 +5446,7 @@ icss-utils@^4.0.0, icss-utils@^4.1.1:
   dependencies:
     postcss "^7.0.14"
 
-idb@^5.0.4:
+idb@^5.0.6:
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/idb/-/idb-5.0.6.tgz#8c94624f5a8a026abe3bef3c7166a5febd1cadc1"
   integrity sha512-/PFvOWPzRcEPmlDt5jEvzVZVs0wyd/EvGvkDIcbBpGuMMLQKrTPG0TxvE2UJtgZtCQCmOtM2QD7yQJBVEjKGOw==
@@ -8564,9 +8564,9 @@ postcss@7.0.21:
     supports-color "^6.1.0"
 
 postcss@^7, postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.14, postcss@^7.0.17, postcss@^7.0.2, postcss@^7.0.23, postcss@^7.0.27, postcss@^7.0.32, postcss@^7.0.5, postcss@^7.0.6:
-  version "7.0.33"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.33.tgz#8aa22158ba133e4b4dd49a35031b75a68215b760"
-  integrity sha512-L3CKJMGkaTmz+/1AvXyOKpD7wPoUV0rBa2AdUXrsPBp8KLl5X99rY6gr4wQyMaeTo4wV+JdY7RaxlA5JsLaeig==
+  version "7.0.34"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.34.tgz#f2baf57c36010df7de4009940f21532c16d65c20"
+  integrity sha512-H/7V2VeNScX9KE83GDrDZNiGT1m2H+UTnlinIzhjlLX9hfMUn1mHNnGeX81a1c8JSBdBvqk7c2ZOG6ZPn5itGw==
   dependencies:
     chalk "^2.4.2"
     source-map "^0.6.1"
@@ -8891,7 +8891,7 @@ react-oot@^1.0.5:
   dependencies:
     cuid "^2.1.8"
 
-react-scripts@3.4.3:
+react-scripts@^3.4.3:
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-3.4.3.tgz#21de5eb93de41ee92cd0b85b0e1298d0bb2e6c51"
   integrity sha512-oSnoWmii/iKdeQiwaO6map1lUaZLmG0xIUyb/HwCVFLT7gNbj8JZ9RmpvMCZ4fB98ZUMRfNmp/ft8uy/xD1RLA==
@@ -10136,7 +10136,7 @@ supports-color@^7.0.0, supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-suub@^3.0.1, suub@^3.1.0:
+suub@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/suub/-/suub-3.1.0.tgz#47565a53c8f5d3765196335bdb16778cbda723a0"
   integrity sha512-eul4xrqVaCKk1C9QlTmBdIvBS0qQxozyxCv414KGxDyci88gmL5Tp5zsZ+zQVwEefnyrT5Iu1w4Kqb5VZArlqw==
@@ -10432,7 +10432,7 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@~3.9.7:
+typescript@^3.9.7:
   version "3.9.7"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
   integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==
