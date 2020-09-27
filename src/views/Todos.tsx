@@ -10,7 +10,10 @@ interface Props {
 export const Todos: React.FC<Props> = ({ state, store }) => {
   const sortedTodos = React.useMemo(() => {
     return Object.keys(state.data.todos ?? {})
-      .map((todoId) => state.data.todos[todoId])
+      .map((todoId) => ({
+        id: todoId,
+        ...state.data.todos[todoId],
+      }))
       .sort((l, r) => l.createdAt.localeCompare(r.createdAt));
   }, [state.data.todos]);
 
@@ -34,7 +37,13 @@ export const Todos: React.FC<Props> = ({ state, store }) => {
         {sortedTodos.map((todo) => {
           return (
             <div key={todo.shortId}>
-              <input type="checkbox" checked={todo.done} readOnly={true} />
+              <input
+                type="checkbox"
+                checked={todo.done}
+                onChange={(e) => {
+                  store.update('todos', todo.id, { done: e.target.checked });
+                }}
+              />
               {todo.title}
             </div>
           );
