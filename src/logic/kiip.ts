@@ -16,10 +16,10 @@ type Schema = {
 
 interface Metadata {
   name: string;
-  servers: Array<{
+  server: {
     url: string;
     token: string;
-  }>;
+  } | null;
 }
 
 export type AppKiip = Kiip<Schema, Metadata>;
@@ -35,7 +35,7 @@ export async function AppKiip() {
   const kiip = Kiip<Schema, Metadata>(db, {
     getInitialMetadata: () => ({
       name: 'New Document',
-      servers: [],
+      server: null,
     }),
   });
 

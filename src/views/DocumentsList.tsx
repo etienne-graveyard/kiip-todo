@@ -2,6 +2,7 @@ import React from 'react';
 import { Styled } from '../design/styled';
 import { Fonts } from '../design/fonts';
 import { Tokens } from '../design/tokens';
+import { bigButton, blueCard, fixedBottomOverlay } from '../design/composition';
 import Scrollbar from 'react-scrollbars-custom';
 import { Colors } from '../design/colors';
 import { Grid } from '../design/grid';
@@ -12,6 +13,7 @@ import { Overlay } from 'react-oot';
 import { AppDocument, AppKiip } from '../logic/kiip';
 import { addBetween, notNil } from '../utils';
 import { DocumentSettings } from './DocumentSettings';
+import { ImportFromServerForm } from './ImportFromServerForm';
 
 interface Props {
   kiip: AppKiip;
@@ -21,16 +23,18 @@ interface Props {
 }
 
 export const DocumentsList: React.FC<Props> = ({ documents, addDocument, kiip, openDocument }) => {
-  const [configDocumentId, setConfigDocumentId] = React.useState<string | null>(null);
+  const [overlayMode, setOverlayMode] = React.useState<
+    null | { type: 'add' } | { type: 'import' } | { type: 'config'; documentId: string }
+  >(null);
 
   const document = React.useMemo(() => {
-    if (configDocumentId === null) {
-      return null;
+    if (overlayMode && overlayMode.type === 'config') {
+      return notNil(documents.find((doc) => doc.id === overlayMode.documentId));
     }
-    return notNil(documents.find((doc) => doc.id === configDocumentId));
-  }, [documents, configDocumentId]);
+    return null;
+  }, [documents, overlayMode]);
 
-  console.log({ documents, selectedDocumentId: configDocumentId, document });
+  console.log({ documents, selectedDocumentId: overlayMode, document });
 
   return (
     <Styled.div
@@ -51,7 +55,7 @@ export const DocumentsList: React.FC<Props> = ({ documents, addDocument, kiip, o
             Tokens.margin({ top: 4 }),
           ]}
         >
-          Todo List
+          Documents
         </Styled.h1>
         <Styled.div zs={[Tokens.padding(2)]}>
           {addBetween(
@@ -92,7 +96,12 @@ export const DocumentsList: React.FC<Props> = ({ documents, addDocument, kiip, o
                     Tokens.margin({ right: 3 }),
                   ]}
                   onClick={() => {
-                    setConfigDocumentId((prev) => (prev === doc.id ? null : doc.id));
+                    setOverlayMode((prev) => {
+                      if (prev && prev.type === 'config' && prev.documentId === doc.id) {
+                        return null;
+                      }
+                      return { type: 'config', documentId: doc.id };
+                    });
                   }}
                 >
                   <MoreIcon size={Grid.small(4)} />
@@ -105,39 +114,102 @@ export const DocumentsList: React.FC<Props> = ({ documents, addDocument, kiip, o
           )}
         </Styled.div>
       </Scrollbar>
-      {document !== null ? (
-        <Overlay
-          key={document.id}
-          canEscapeKeyClose={true}
-          canOutsideClickClose={true}
-          onClose={() => {
-            setConfigDocumentId(null);
-          }}
-        >
-          <DocumentSettings document={document} kiip={kiip} />
-        </Overlay>
-      ) : (
-        <Overlay canEscapeKeyClose={false} canOutsideClickClose={false} key="add-doc">
-          <Styled.button
-            onClick={() => addDocument()}
-            zs={[
-              {
-                border: 'none',
-                position: 'fixed',
-                bottom: Grid.small(2),
-                right: Grid.small(2),
-                width: Grid.size(2),
-                height: Grid.size(2),
-                background: Colors.blue(700),
-                borderRadius: Grid.small(4),
-              },
-              Tokens.flexCenter(),
-            ]}
-          >
-            <PlusIcon size={Grid.small(4)} color={Colors.white} />
-          </Styled.button>
-        </Overlay>
-      )}
+      {(() => {
+        if (overlayMode === null) {
+          return (
+            <Overlay canEscapeKeyClose={false} canOutsideClickClose={false} key="add-doc">
+              <Styled.button
+                onClick={() => {
+                  setOverlayMode({ type: 'add' });
+                }}
+                zs={[
+                  {
+                    border: 'none',
+                    position: 'fixed',
+                    bottom: Grid.small(2),
+                    right: Grid.small(2),
+                    width: Grid.size(2),
+                    height: Grid.size(2),
+                    background: Colors.blue(700),
+                    borderRadius: Grid.small(4),
+                  },
+                  Tokens.flexCenter(),
+                ]}
+              >
+                <PlusIcon size={Grid.small(4)} color={Colors.white} />
+              </Styled.button>
+            </Overlay>
+          );
+        }
+        if (overlayMode.type === 'config') {
+          if (document) {
+            return (
+              <Overlay
+                key={document.id}
+                canEscapeKeyClose={true}
+                canOutsideClickClose={true}
+                onClose={() => {
+                  setOverlayMode(null);
+                }}
+              >
+                <DocumentSettings document={document} kiip={kiip} />
+              </Overlay>
+            );
+          }
+          return null;
+        }
+        if (overlayMode.type === 'add') {
+          return (
+            <Overlay>
+              <Styled.div zs={[...fixedBottomOverlay, Tokens.flexVertical()]}>
+                <Styled.div zs={[...blueCard, Tokens.padding(2)]}>
+                  <Styled.button
+                    onClick={() => {
+                      addDocument();
+                      setOverlayMode(null);
+                    }}
+                    zs={bigButton}
+                  >
+                    Create new
+                  </Styled.button>
+                  <Styled.div zs={{ height: Grid.small(2) }} />
+                  <Styled.button
+                    onClick={() => {
+                      setOverlayMode({ type: 'import' });
+                    }}
+                    zs={bigButton}
+                  >
+                    Import from server
+                  </Styled.button>
+                </Styled.div>
+              </Styled.div>
+            </Overlay>
+          );
+        }
+        if (overlayMode.type === 'import') {
+          return (
+            <Overlay>
+              <Styled.div zs={[...fixedBottomOverlay, Tokens.flexVertical()]}>
+                <Styled.div zs={blueCard}>
+                  <ImportFromServerForm
+                    onCancel={() => {
+                      setOverlayMode(null);
+                    }}
+                    onConfirm={(address, documentId, token) => {
+                      console.log({
+                        address,
+                        documentId,
+                        token,
+                      });
+                    }}
+                  />
+                </Styled.div>
+              </Styled.div>
+            </Overlay>
+          );
+        }
+        throw new Error('Ooops');
+      })()}
     </Styled.div>
   );
 };

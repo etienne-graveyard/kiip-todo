@@ -10,3 +10,7 @@ export const { Styled, StyledTag, StyledTagWithProps } = zenstyle.createZenStyle
 export type Zs = zenstyle.Zs<Theme>;
 export type ZsFn = zenstyle.ZsFn<Theme>;
 export type ZsItem = zenstyle.ZsItem<Theme>;
+
+export function mergeZs(...zss: Array<zenstyle.Zs<Theme>>): zenstyle.ZsArray<Theme> {
+  return zenstyle.mergeZs(...zss) as any;
+}

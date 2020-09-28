@@ -5,27 +5,20 @@ import { Colors } from '../design/colors';
 import { Tokens } from '../design/tokens';
 import { TextInput } from '../components/TextInput';
 import { Fonts } from '../design/fonts';
+import { baseButton, blueCard } from '../design/composition';
 
 interface Props {
   onCancel: () => void;
-  onAdd: (address: string, password: string) => void;
+  onConfirm: (address: string, documentId: string, token: string) => void;
 }
 
-export const AddServerForm: React.FC<Props> = ({ onCancel, onAdd }) => {
+export const ImportFromServerForm: React.FC<Props> = ({ onCancel, onConfirm }) => {
   const [serverAddress, setServerAddress] = React.useState('');
-  const [serverPassword, setServerPassword] = React.useState('');
+  const [token, setToken] = React.useState('');
+  const [docId, setDocId] = React.useState('');
 
   return (
-    <Styled.div
-      zs={[
-        {
-          borderRadius: Grid.small(3),
-          background: Colors.blue(700),
-        },
-        Tokens.flexVertical(),
-        Tokens.padding({ all: 2 }),
-      ]}
-    >
+    <Styled.div zs={[...blueCard, Tokens.padding({ all: 2 })]}>
       <Styled.h3
         zs={[
           Fonts.lineHeight(4),
@@ -36,23 +29,18 @@ export const AddServerForm: React.FC<Props> = ({ onCancel, onAdd }) => {
           }),
         ]}
       >
-        Add Server
+        Import from Server
       </Styled.h3>
       <TextInput placeholder="Server address" value={serverAddress} onChange={setServerAddress} />
-      <Styled.div placeholder="Server password" zs={{ height: Grid.small(2) }} />
-      <TextInput
-        placeholder="Password"
-        value={serverPassword}
-        onChange={setServerPassword}
-        type="password"
-      />
+      <Styled.div zs={{ height: Grid.small(2) }} />
+      <TextInput placeholder={'Document ID'} value={docId} onChange={setDocId} type="text" />
+      <Styled.div zs={{ height: Grid.small(2) }} />
+      <TextInput placeholder={'Token'} value={token} onChange={setToken} type="password" />
       <Styled.div zs={[Tokens.flexHorizontal('center'), Tokens.margin({ top: 2 })]}>
         <Styled.button
           onClick={onCancel}
           zs={[
-            Fonts.SourceSansPro('SemiBold'),
-            Fonts.lineHeight(4),
-            Tokens.padding({ vertical: 2, horizontal: 3 }),
+            ...baseButton,
             {
               color: Colors.white,
               textDecoration: 'underline',
@@ -65,7 +53,7 @@ export const AddServerForm: React.FC<Props> = ({ onCancel, onAdd }) => {
         <Styled.div zs={[Tokens.flexChild]} />
         <Styled.button
           onClick={() => {
-            onAdd(serverAddress, serverPassword);
+            onConfirm(serverAddress, docId, token);
           }}
           zs={[
             Fonts.SourceSansPro('SemiBold'),

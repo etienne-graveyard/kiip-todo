@@ -5,9 +5,10 @@ import { Todos } from './Todos';
 interface Props {
   kiip: AppKiip;
   document: AppDocument;
+  closeDocument: () => void;
 }
 
-export const Document: React.FC<Props> = ({ document, kiip }) => {
+export const Document: React.FC<Props> = ({ document, kiip, closeDocument }) => {
   const [documentStore, setDocumentStore] = React.useState<AppKiipDocumentStore | null>(null);
 
   React.useEffect(() => {
@@ -33,5 +34,12 @@ export const Document: React.FC<Props> = ({ document, kiip }) => {
     return <div>Loading...</div>;
   }
 
-  return <Todos state={db} store={documentStore} />;
+  return (
+    <div>
+      <div>
+        <button onClick={() => closeDocument()}>Close</button>
+      </div>
+      <Todos state={db} store={documentStore} />
+    </div>
+  );
 };

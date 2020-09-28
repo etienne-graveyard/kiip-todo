@@ -32,5 +32,13 @@ export const Documents: React.FC<Props> = ({ documents, addDocument, kiip }) => 
       />
     );
   }
-  return <Document kiip={kiip} document={document} />;
+  return (
+    <Document
+      kiip={kiip}
+      document={document}
+      closeDocument={() => {
+        setSelectedDocumentId(null);
+      }}
+    />
+  );
 };
