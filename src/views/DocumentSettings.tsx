@@ -52,10 +52,13 @@ export const DocumentSettings: React.FC<Props> = ({ document, kiip }) => {
                     if (!documentStore) {
                       return;
                     }
-                    const data = documentStore.prepareSync();
+                    const outSync = documentStore.prepareSync();
                     // const document = documentStore.getState();
-                    const res = await sync(document.id, server.url, server.token, data);
-                    documentStore.handleSync(res);
+                    const sync1 = await sync(document.id, server.url, server.token, outSync);
+                    const sync2 = await documentStore.handleSync(sync1);
+                    const sync3 = await sync(document.id, server.url, server.token, sync2);
+                    const sync4 = await documentStore.handleSync(sync3);
+                    console.log({ sync1, sync2, sync3, sync4 });
                   }}
                 >
                   Sync
@@ -96,7 +99,7 @@ export const DocumentSettings: React.FC<Props> = ({ document, kiip }) => {
                     });
                     const { token } = await register(document.id, address, password);
 
-                    console.log('success', token);
+                    console.log('id', document.id, 'token', token);
 
                     // documentStore.setMeta()
                     documentStore.setMeta({

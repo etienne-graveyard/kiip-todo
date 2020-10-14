@@ -14,6 +14,7 @@ import { AppDocument, AppKiip } from '../logic/kiip';
 import { addBetween, notNil } from '../utils';
 import { DocumentSettings } from './DocumentSettings';
 import { ImportFromServerForm } from './ImportFromServerForm';
+import { sync } from '../logic/KiipServer';
 
 interface Props {
   kiip: AppKiip;
@@ -195,12 +196,28 @@ export const DocumentsList: React.FC<Props> = ({ documents, addDocument, kiip, o
                     onCancel={() => {
                       setOverlayMode(null);
                     }}
-                    onConfirm={(address, documentId, token) => {
+                    onConfirm={async (address, documentId, token) => {
                       console.log({
                         address,
                         documentId,
                         token,
                       });
+                      // create doc
+                      const doc = await kiip.getDocumentStore(documentId);
+                      const docState = doc.getState();
+                      doc.setMeta({
+                        ...docState.meta,
+                        server: {
+                          url: address,
+                          token,
+                        },
+                      });
+                      const prep = doc.prepareSync();
+                      const sync1 = await sync(doc.id, address, token, prep);
+                      const sync2 = await doc.handleSync(sync1);
+                      const sync3 = await sync(doc.id, address, token, sync2);
+                      const sync4 = await doc.handleSync(sync3);
+                      console.log({ sync1, sync2, sync3, sync4 });
                     }}
                   />
                 </Styled.div>
