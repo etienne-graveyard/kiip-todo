@@ -20,7 +20,7 @@ export function notNil<T>(value: T | null | undefined): T {
 }
 
 export function wait(duration: number): Promise<void> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(resolve, duration);
   });
 }

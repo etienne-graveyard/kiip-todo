@@ -1,5 +1,6 @@
 import { Kiip, KiipDocument, KiipDocumentState, KiipDocumentStore, KiipMemoryDb } from '@kiip/core';
 import cuid from 'cuid';
+import { wait } from '../utils';
 
 export type AppDocument = KiipDocument<Metadata>;
 
@@ -64,6 +65,8 @@ export async function AppKiip() {
     done: true,
     createdAt: new Date().toISOString(),
   });
+
+  await wait(6000);
 
   console.log('Sync');
   await sync();
